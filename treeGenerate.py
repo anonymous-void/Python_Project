@@ -10,6 +10,8 @@ import itertools
 import matplotlib.pyplot as plt
 import numpy as np
 
+
+
 def dfs(node, map, nodeTotal):
     print(str(node) + " ")
     global NODECNT
