@@ -6,7 +6,7 @@ INF = 9999
 NODECNT = 0
 
 avBranch = [[0, 2], [0, 3], [1, 2], [1, 3]]
-avBranch2 = [[1, 4], [1, 5], [1, 6], [2, 4], [2, 5], [2, 6], [3, 4], [3, 5], [3, 6]]
+avBranch2 = [[0, 3], [0, 4], [0, 5], [1, 3], [1, 4], [1, 5], [2, 3], [2, 4], [2, 5]]
 
 
 def f_undirected_adjMatrix2Tab(undirected_adjacency_matrix):
@@ -111,23 +111,55 @@ def f_bellman_ford(adjacency_table, vertex_num, branch_num, startVertex=0):
                 disTab[adjacency_table[i][1]] = disTab[adjacency_table[i][0]] + adjacency_table[i][2]
     return disTab
 
+
 def f_vector_calc(directed_adjacency_table, phase_num=2):
     if phase_num == 2:
-
+        V_AB = f_bellman_ford(directed_adjacency_table, vertex_num=4, branch_num=6, startVertex=0)[1]
+        V_ab = f_bellman_ford(directed_adjacency_table, vertex_num=4, branch_num=6, startVertex=2)[3]
+        vector = {'V_AB': V_AB, 'V_ab': V_ab, 'DirectedTable': directed_adjacency_table.tolist()}
     elif phase_num == 3:
+        V_AB = f_bellman_ford(directed_adjacency_table, vertex_num=6, branch_num=10, startVertex=0)[1]
+        V_BC = f_bellman_ford(directed_adjacency_table, vertex_num=6, branch_num=10, startVertex=1)[2]
+        V_CA = f_bellman_ford(directed_adjacency_table, vertex_num=6, branch_num=10, startVertex=2)[0]
+        V_ab = f_bellman_ford(directed_adjacency_table, vertex_num=6, branch_num=10, startVertex=3)[4]
+        V_bc = f_bellman_ford(directed_adjacency_table, vertex_num=6, branch_num=10, startVertex=4)[5]
+        V_ca = f_bellman_ford(directed_adjacency_table, vertex_num=6, branch_num=10, startVertex=5)[3]
+        vector = {'V_AB': V_AB, 'V_BC': V_BC, 'V_CA': V_CA, 'V_ab': V_ab, 'V_bc': V_bc, 'V_ca': V_ca,
+                  'DirectedTable': directed_adjacency_table.tolist()}
+    else:
+        print("SYM: Error, wrong phase_num in f_vector_calc !")
+        vector = 0
+
+    # print(vector)
+    return vector
+
 
 # main code start here
 
-# Tree_Mat = f_find_all_combination_matrix(avBranch2, combination_num=5, vertex_num=6)
-Tree_Mat = f_find_all_combination_matrix(avBranch, combination_num=3, vertex_num=4)
-print(Tree_Mat[0])
+Tree_Mat = f_find_all_combination_matrix(avBranch2, combination_num=5, vertex_num=6)
+# Tree_Mat = f_find_all_combination_matrix(avBranch, combination_num=3, vertex_num=4)
+# print(Tree_Mat)
 table = f_undirected_adjMatrix2Tab(Tree_Mat[0])
-print(table)
+# print(table)
+
 # matrix_restore = f_undirected_adjTab2Matrix(table, 4)
 # print(matrix_restore)
 directed_table = f_employ_capacitor(table)
-print(directed_table)
-print(f_bellman_ford(directed_table[0], vertex_num=4, branch_num=6, startVertex=2))
+# print(directed_table)
+# print(f_bellman_ford(directed_table[0], vertex_num=4, branch_num=6, startVertex=2))
+f_vector_calc(directed_table[0], phase_num=3)
+
+total_counter = 0
+for each_tree in Tree_Mat:
+    undirected_table_of_a_tree = f_undirected_adjMatrix2Tab(each_tree)
+    directed_table_after_cap_employ = f_employ_capacitor(undirected_table_of_a_tree)
+    print('Tree No. ' + str())
+    for each_directed_table in directed_table_after_cap_employ:
+        each_vector = f_vector_calc(each_directed_table, phase_num=3)
+        print(each_vector)
+        total_counter += 1
+
+print("total counter = " + str(total_counter))
 # ------------------------------- Obsolete Code --------------------------------------------------
 
 # allComb = list(itertools.combinations(avBranch, 3))

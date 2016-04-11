@@ -12,6 +12,7 @@ for item in adjacenceTable:
     dict_Table.append(tmpDict)
 print(dict_Table)
 
+
 def BellmanFord(adjacency_table, vertex_num, branch_num, startVertex=0):
     disTab = [INF] * (vertex_num + 1)
     disTab[startVertex] = 0
@@ -31,6 +32,3 @@ INF = 9999
 # dis = BellmanFord(adjacenceTable, vetxNum, bchNum, startVertex=0)
 #
 # print(dis)
-
-for i in range(0, 10, 2):
-    print(i)
