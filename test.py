@@ -4,8 +4,8 @@ import copy as cp
 import itertools
 from collections import OrderedDict
 import matplotlib.pyplot as plt
-from matplotlib import rcParams
-rcParams['text.usetex'] = True
+# from matplotlib import rcParams
+# rcParams['text.usetex'] = True
 
 tmp_undirected_adjacency_table = [[0, 3, 0], [0, 4, 0], [0, 5, 0], [1, 3, 0], [2, 3, 0]]
 
@@ -49,6 +49,9 @@ def f_Graph_plot_label(directed_adjacency_table_dict):
     #     r"$ \begin{array}{ccc} a & b & c \\ d & e & f \\ g & h & i \end{array} $",
     #     (0.25, 0.25),
     #     textcoords='axes fraction', size=20)
+    plt.text(-1.5, 4.5, r"$V_{in} = [" + str(directed_adjacency_table_dict['V_AB']) + "\ " \
+             + str(directed_adjacency_table_dict['V_BC']) + "\ " \
+             + str(directed_adjacency_table_dict['V_CA']) + "]$", size=20)
 
 
 def f_Graph_plot_capacitor(directed_adjacency_table_item,
