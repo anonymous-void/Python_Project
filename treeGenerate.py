@@ -49,30 +49,3 @@ for item1 in allComb:
         treeCnt += 1
 
 print("tree Num = " + str(treeCnt))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# a = np.arange(36).reshape(6, 6)
-# print a
-# a[1][2] = 9999
-# print a
-# print a
-# fig = plt.figure()
-# # ax = fig.add_subplot(1, 1, 1)
-# # ax.set_aspect('equal')
-# plt.imshow(a, interpolation='nearest', cmap='ocean')
-# plt.colorbar()
-# plt.show()

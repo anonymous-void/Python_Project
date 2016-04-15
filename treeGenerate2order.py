@@ -1,6 +1,7 @@
 import itertools
 import numpy as np
 import copy as cp
+from collections import OrderedDict
 
 INF = 9999
 NODECNT = 0
@@ -100,6 +101,41 @@ def f_employ_capacitor(undirected_adjacency_table):
     return directed_table2ret
 
 
+def f_employ_2same_capacitor(undirected_adjacency_table):
+    all_combination = list(itertools.combinations(undirected_adjacency_table, 2))
+    directed_table2ret = list([])
+    for combination_index, combination in enumerate(all_combination):
+        tmp_undirected_adjacency_table = cp.deepcopy(undirected_adjacency_table)
+        tmp_undirected_adjacency_table.remove(combination[0])
+        tmp_undirected_adjacency_table.remove(combination[1])
+
+        tmp_directed_table_short_circuit = []
+        for item in tmp_undirected_adjacency_table:
+            tmp_directed_table_short_circuit.append(item)
+            tmp_directed_table_short_circuit.append([item[1], item[0], item[2]])
+        # print(tmp_directed_table_short_circuit)
+
+        # print('combination index: ', combination_index)
+
+        for branch1 in [1, -1]:
+            for branch2 in [1, -1]:
+                tmp_directed_table_capacitor = list([])
+                tmp_directed_table_capacitor.append([combination[0][0], combination[0][1], branch1])
+                tmp_directed_table_capacitor.append([combination[0][1], combination[0][0], -branch1])
+                tmp_directed_table_capacitor.append([combination[1][0], combination[1][1], branch2])
+                tmp_directed_table_capacitor.append([combination[1][1], combination[1][0], -branch2])
+
+                tmp_pack = list([])
+                for x in tmp_directed_table_short_circuit:
+                    tmp_pack.append(x)
+                for y in tmp_directed_table_capacitor:
+                    tmp_pack.append(y)
+                directed_table2ret.append(np.array(tmp_pack))
+                # print(directed_table2ret)
+
+    return directed_table2ret
+
+
 def f_bellman_ford(adjacency_table, vertex_num, branch_num, startVertex=0):
     # Bellman-Ford method
     disTab = [INF] * vertex_num
@@ -116,7 +152,7 @@ def f_vector_calc(directed_adjacency_table, phase_num=2):
     if phase_num == 2:
         V_AB = f_bellman_ford(directed_adjacency_table, vertex_num=4, branch_num=6, startVertex=0)[1]
         V_ab = f_bellman_ford(directed_adjacency_table, vertex_num=4, branch_num=6, startVertex=2)[3]
-        vector = {'V_AB': V_AB, 'V_ab': V_ab, 'DirectedTable': directed_adjacency_table.tolist()}
+        vector2ret = {'V_AB': V_AB, 'V_ab': V_ab, 'DirectedTable': directed_adjacency_table.tolist()}
     elif phase_num == 3:
         V_AB = f_bellman_ford(directed_adjacency_table, vertex_num=6, branch_num=10, startVertex=0)[1]
         V_BC = f_bellman_ford(directed_adjacency_table, vertex_num=6, branch_num=10, startVertex=1)[2]
@@ -124,65 +160,67 @@ def f_vector_calc(directed_adjacency_table, phase_num=2):
         V_ab = f_bellman_ford(directed_adjacency_table, vertex_num=6, branch_num=10, startVertex=3)[4]
         V_bc = f_bellman_ford(directed_adjacency_table, vertex_num=6, branch_num=10, startVertex=4)[5]
         V_ca = f_bellman_ford(directed_adjacency_table, vertex_num=6, branch_num=10, startVertex=5)[3]
-        vector = {'V_AB': V_AB, 'V_BC': V_BC, 'V_CA': V_CA, 'V_ab': V_ab, 'V_bc': V_bc, 'V_ca': V_ca,
-                  'DirectedTable': directed_adjacency_table.tolist()}
+        vector2ret = OrderedDict([('V_AB', V_AB), ('V_BC', V_BC), ('V_CA', V_CA), ('V_ab', V_ab), ('V_bc', V_bc), ('V_ca', V_ca),
+                              ('DirectedTable', directed_adjacency_table.tolist())])
     else:
         print("SYM: Error, wrong phase_num in f_vector_calc !")
-        vector = 0
+        vector2ret = 0
 
     # print(vector)
-    return vector
+    return vector2ret
 
 
 # main code start here
 
 Tree_Mat = f_find_all_combination_matrix(avBranch2, combination_num=5, vertex_num=6)
-# Tree_Mat = f_find_all_combination_matrix(avBranch, combination_num=3, vertex_num=4)
-# print(Tree_Mat)
-table = f_undirected_adjMatrix2Tab(Tree_Mat[0])
-# print(table)
 
-# matrix_restore = f_undirected_adjTab2Matrix(table, 4)
-# print(matrix_restore)
-directed_table = f_employ_capacitor(table)
-# print(directed_table)
-# print(f_bellman_ford(directed_table[0], vertex_num=4, branch_num=6, startVertex=2))
-f_vector_calc(directed_table[0], phase_num=3)
+# Main loop for finding all structure of 2 cap employment
+def f_main_two_cap_employ_findall():
+    total_counter = 0
+    two_cap_employ_table = list([])
+    for tree_index, tree_item in enumerate(Tree_Mat):
+        undirected_table_of_a_tree = f_undirected_adjMatrix2Tab(tree_item)
+        directed_table_after_cap_employ = f_employ_2same_capacitor(undirected_table_of_a_tree)
+        print('Tree No. ' + str(tree_index))
+        for each_directed_table in directed_table_after_cap_employ:
+            each_vector = f_vector_calc(each_directed_table, phase_num=3)
+            each_vector['Tree Num'] = str(tree_index)
+            each_vector['TopologyCNT'] = str(total_counter)
+            each_vector['Vin'] = str('None')
+            each_vector['Vout'] = str('None')
+            two_cap_employ_table.append(each_vector)
+            total_counter += 1
 
-total_counter = 0
-for each_tree in Tree_Mat:
-    undirected_table_of_a_tree = f_undirected_adjMatrix2Tab(each_tree)
-    directed_table_after_cap_employ = f_employ_capacitor(undirected_table_of_a_tree)
-    print('Tree No. ' + str())
-    for each_directed_table in directed_table_after_cap_employ:
-        each_vector = f_vector_calc(each_directed_table, phase_num=3)
-        print(each_vector)
-        total_counter += 1
-
-print("total counter = " + str(total_counter))
-# ------------------------------- Obsolete Code --------------------------------------------------
-
-# allComb = list(itertools.combinations(avBranch, 3))
-# print(allComb)
-# print(len(allComb))
+    print("total counter = " + str(total_counter))
+    # print(TWO_CAP_EMPLOY_TABLE)
+    print('Length of WHOLE Table ' + str(len(two_cap_employ_table)))
+    return two_cap_employ_table
 
 
-# treeMat = []
-# adjTab = []
-#
-#
-# for item1 in allComb:
-#     tmpMat = np.array([[INF] * 4] * 4)
-#     for i in range(0, 4):
-#         tmpMat[i][i] = 0
-#     for idx in item1:
-#         tmpMat[idx[0] - 1][idx[1] - 1] = 1
-#         tmpMat[idx[1] - 1][idx[0] - 1] = 1
-#     book = [0] * 4
-#     book[0] = 1
-#     dfs(0, tmpMat, 4, book, 4)
-#     if sum(book) == 4:
-#         treeMat.append(tmpMat)
-#
-# print(treeMat)
+TWO_CAP_EMPLOY_TABLE = f_main_two_cap_employ_findall()
 
+VII = OrderedDict([('V1', [2, -1, -1]), ('V2', [1, 1, -2]), ('V3', [-1, 2, -1]),
+                   ('V4', [-2, 1, 1]), ('V5', [-1, -1, 2]), ('V6', [1, -2, 1])])
+for each_topology in TWO_CAP_EMPLOY_TABLE:
+    for vector_key in VII:
+        # Vin compare
+        if (VII[vector_key][0] == each_topology['V_AB']) \
+                and (VII[vector_key][1] == each_topology['V_BC'])\
+                and (VII[vector_key][2] == each_topology['V_CA']):
+            each_topology['Vin'] = vector_key
+        # Vout compare
+        if (VII[vector_key][0] == each_topology['V_ab']) \
+                and (VII[vector_key][1] == each_topology['V_bc']) \
+                and (VII[vector_key][2] == each_topology['V_ca']):
+            each_topology['Vout'] = vector_key
+
+
+effective_table = list([])
+
+for each_item in TWO_CAP_EMPLOY_TABLE:
+    if (each_item['Vin'] != 'None') and (each_item['Vout'] != 'None'):
+        effective_table.append(each_item)
+
+for each_item in effective_table:
+    print(each_item)
+print('Length of effective topology: ', str(len(effective_table)))
