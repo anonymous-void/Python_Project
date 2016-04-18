@@ -2,6 +2,8 @@ import itertools
 import numpy as np
 import copy as cp
 from collections import OrderedDict
+import matplotlib.pyplot as plt
+import topology
 
 INF = 9999
 NODECNT = 0
@@ -197,30 +199,90 @@ def f_main_two_cap_employ_findall():
     return two_cap_employ_table
 
 
-TWO_CAP_EMPLOY_TABLE = f_main_two_cap_employ_findall()
+connection_table = f_main_two_cap_employ_findall()
 
-VII = OrderedDict([('V1', [2, -1, -1]), ('V2', [1, 1, -2]), ('V3', [-1, 2, -1]),
-                   ('V4', [-2, 1, 1]), ('V5', [-1, -1, 2]), ('V6', [1, -2, 1])])
-for each_topology in TWO_CAP_EMPLOY_TABLE:
-    for vector_key in VII:
-        # Vin compare
-        if (VII[vector_key][0] == each_topology['V_AB']) \
-                and (VII[vector_key][1] == each_topology['V_BC'])\
-                and (VII[vector_key][2] == each_topology['V_CA']):
-            each_topology['Vin'] = vector_key
-        # Vout compare
-        if (VII[vector_key][0] == each_topology['V_ab']) \
-                and (VII[vector_key][1] == each_topology['V_bc']) \
-                and (VII[vector_key][2] == each_topology['V_ca']):
-            each_topology['Vout'] = vector_key
+def f_filter_sorted_table(connection_table, side = 'InputSide'):
+    # No.1 Find all valid table
+    VII = OrderedDict([
+        ('V0', [0, 0, 0]),
+        ('V1', [2, -1, -1]), ('V2', [1, 1, -2]), ('V3', [-1, 2, -1]),
+        ('V4', [-2, 1, 1]), ('V5', [-1, -1, 2]), ('V6', [1, -2, 1])
+    ])
+    for each_topology in connection_table:
+        for vector_key in VII:
+            # Vin compare
+            if (VII[vector_key][0] == each_topology['V_AB']) \
+                    and (VII[vector_key][1] == each_topology['V_BC'])\
+                    and (VII[vector_key][2] == each_topology['V_CA']):
+                each_topology['Vin'] = vector_key
+            # Vout compare
+            if (VII[vector_key][0] == each_topology['V_ab']) \
+                    and (VII[vector_key][1] == each_topology['V_bc']) \
+                    and (VII[vector_key][2] == each_topology['V_ca']):
+                each_topology['Vout'] = vector_key
+
+    valid_table = {'V0': [], 'V1': [], 'V2': [], 'V3': [], 'V4': [], 'V5': [], 'V6': []}
+    for each_item in connection_table:
+        if (each_item['Vin'] != 'None') and (each_item['Vout'] != 'None'):
+            if (each_item['Vin'] == 'V0'):
+                valid_table['V0'].append(each_item)
+            elif (each_item['Vin'] == 'V1'):
+                valid_table['V1'].append(each_item)
+            elif (each_item['Vin'] == 'V2'):
+                valid_table['V2'].append(each_item)
+            elif (each_item['Vin'] == 'V3'):
+                valid_table['V3'].append(each_item)
+            elif (each_item['Vin'] == 'V4'):
+                valid_table['V4'].append(each_item)
+            elif (each_item['Vin'] == 'V5'):
+                valid_table['V5'].append(each_item)
+            elif (each_item['Vin'] == 'V6'):
+                valid_table['V6'].append(each_item)
+
+    # No.2 Sort the whole table according to the other side.
+    sorted_valid_OrderedDict = OrderedDict([('V0', []), ('V1', []), ('V2', []), ('V3', []), ('V4', []), ('V5', []), ('V6', [])])
+    for each_key in sorted_valid_OrderedDict:
+        sorted_valid_OrderedDict[each_key] = sorted(valid_table[each_key], key=lambda k: k['Vout'])
+
+    return sorted_valid_OrderedDict
 
 
-effective_table = list([])
+tmp_sorted_OrderedDict = f_filter_sorted_table(connection_table)
+for key in tmp_sorted_OrderedDict:
+    print("Len = " + str(len(tmp_sorted_OrderedDict[key])), end=" ")
+    print(tmp_sorted_OrderedDict[key])
 
-for each_item in TWO_CAP_EMPLOY_TABLE:
-    if (each_item['Vin'] != 'None') and (each_item['Vout'] != 'None'):
-        effective_table.append(each_item)
 
-for each_item in effective_table:
-    print(each_item)
-print('Length of effective topology: ', str(len(effective_table)))
+which_vector2print = 'V0'
+dict_cnt_limit = len(tmp_sorted_OrderedDict[which_vector2print])
+subplot_cnt = 1
+dict_cnt = 0
+figure_cnt = 1
+
+
+while True:
+    if dict_cnt >= dict_cnt_limit:
+        plt.show()
+        break
+    else:
+        if subplot_cnt > 12:
+            subplot_cnt = 1
+            figure_cnt += 1
+            plt.show()
+            plt.figure(figure_cnt)
+        else:
+            plt.subplot(4, 3, subplot_cnt)
+            topology.f_Graph_plot_graph(tmp_sorted_OrderedDict[which_vector2print][dict_cnt])
+            subplot_cnt += 1
+            dict_cnt += 1
+
+
+
+
+
+
+
+
+
+
+# plt.show()

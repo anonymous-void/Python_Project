@@ -49,9 +49,12 @@ def f_Graph_plot_label(directed_adjacency_table_dict):
     #     r"$ \begin{array}{ccc} a & b & c \\ d & e & f \\ g & h & i \end{array} $",
     #     (0.25, 0.25),
     #     textcoords='axes fraction', size=20)
-    plt.text(-1.5, 4.5, r"$V_{in} = [" + str(directed_adjacency_table_dict['V_AB']) + "\ " \
+    plt.text(-1.5, 5, r"$V_{in} = [" + str(directed_adjacency_table_dict['V_AB']) + "\ " \
              + str(directed_adjacency_table_dict['V_BC']) + "\ " \
              + str(directed_adjacency_table_dict['V_CA']) + "]$", size=20)
+    plt.text(3, 5, r"$V_{out} = [" + str(directed_adjacency_table_dict['V_ab']) + "\ " \
+             + str(directed_adjacency_table_dict['V_bc']) + "\ " \
+             + str(directed_adjacency_table_dict['V_ca']) + "]$", size=20)
 
 
 def f_Graph_plot_capacitor(directed_adjacency_table_item,
@@ -123,11 +126,17 @@ def f_Graph_plot_graph(directed_adjacency_table_dict):
 
 
 
-# f_Graph_plot_capacitor([2, 3, -1])
-f_Graph_plot_graph(tmp_directed_table_dict)
-plt.margins(0.2)
 
-plt.axis('off')
+# f_Graph_plot_graph(tmp_directed_table_dict)
+# plt.margins(0.2)
+#
+# plt.axis('off')
+#
+# plt.show()
 
-plt.show()
-
+d = {'banana': 3, 'apple':4, 'pear': 1, 'orange': 2}
+e = OrderedDict([('banana', 3), ('apple', 4), ('pear', 1), ('orange', 2)])
+f = [OrderedDict([('banana', 3), ('apple', 4), ('pear', 1), ('orange', 2)]), OrderedDict([('banana', 1), ('apple', 0), ('pear', 0), ('orange', 0)])]
+# print(OrderedDict(sorted(f.items(), key=lambda t: t[1])))
+g = sorted(f, key=lambda t: t['banana'])
+print(g)
