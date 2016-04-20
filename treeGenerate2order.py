@@ -3,6 +3,7 @@ import numpy as np
 import copy as cp
 from collections import OrderedDict
 import matplotlib.pyplot as plt
+from matplotlib.backends.backend_pdf import PdfPages
 import topology
 
 INF = 9999
@@ -103,7 +104,7 @@ def f_employ_capacitor(undirected_adjacency_table):
     return directed_table2ret
 
 
-def f_employ_2same_capacitor(undirected_adjacency_table):
+def f_employ_capacitor_2_1_1(undirected_adjacency_table):
     all_combination = list(itertools.combinations(undirected_adjacency_table, 2))
     directed_table2ret = list([])
     for combination_index, combination in enumerate(all_combination):
@@ -134,6 +135,52 @@ def f_employ_2same_capacitor(undirected_adjacency_table):
                     tmp_pack.append(y)
                 directed_table2ret.append(np.array(tmp_pack))
                 # print(directed_table2ret)
+
+    return directed_table2ret
+
+
+def f_employ_capacitor_2_2_1(undirected_adjacency_table):
+    all_combination = list(itertools.combinations(undirected_adjacency_table, 2))
+    directed_table2ret = list([])
+    for combination_index, combination in enumerate(all_combination):
+        tmp_undirected_adjacency_table = cp.deepcopy(undirected_adjacency_table)
+        tmp_undirected_adjacency_table.remove(combination[0])
+        tmp_undirected_adjacency_table.remove(combination[1])
+
+        tmp_directed_table_short_circuit = []
+        for item in tmp_undirected_adjacency_table:
+            tmp_directed_table_short_circuit.append(item)
+            tmp_directed_table_short_circuit.append([item[1], item[0], item[2]])
+
+        for branch1 in [1, -1]:
+            for branch2 in [2, -2]:
+                tmp_directed_table_capacitor = list([])
+                tmp_directed_table_capacitor.append([combination[0][0], combination[0][1], branch1])
+                tmp_directed_table_capacitor.append([combination[0][1], combination[0][0], -branch1])
+                tmp_directed_table_capacitor.append([combination[1][0], combination[1][1], branch2])
+                tmp_directed_table_capacitor.append([combination[1][1], combination[1][0], -branch2])
+
+                tmp_pack = list([])
+                for x in tmp_directed_table_short_circuit:
+                    tmp_pack.append(x)
+                for y in tmp_directed_table_capacitor:
+                    tmp_pack.append(y)
+                directed_table2ret.append(np.array(tmp_pack))
+
+        for branch1 in [2, -2]:
+            for branch2 in [1, -1]:
+                tmp_directed_table_capacitor = list([])
+                tmp_directed_table_capacitor.append([combination[0][0], combination[0][1], branch1])
+                tmp_directed_table_capacitor.append([combination[0][1], combination[0][0], -branch1])
+                tmp_directed_table_capacitor.append([combination[1][0], combination[1][1], branch2])
+                tmp_directed_table_capacitor.append([combination[1][1], combination[1][0], -branch2])
+
+                tmp_pack = list([])
+                for x in tmp_directed_table_short_circuit:
+                    tmp_pack.append(x)
+                for y in tmp_directed_table_capacitor:
+                    tmp_pack.append(y)
+                directed_table2ret.append(np.array(tmp_pack))
 
     return directed_table2ret
 
@@ -182,7 +229,7 @@ def f_main_two_cap_employ_findall():
     two_cap_employ_table = list([])
     for tree_index, tree_item in enumerate(Tree_Mat):
         undirected_table_of_a_tree = f_undirected_adjMatrix2Tab(tree_item)
-        directed_table_after_cap_employ = f_employ_2same_capacitor(undirected_table_of_a_tree)
+        directed_table_after_cap_employ = f_employ_capacitor_2_2_1(undirected_table_of_a_tree)
         print('Tree No. ' + str(tree_index))
         for each_directed_table in directed_table_after_cap_employ:
             each_vector = f_vector_calc(each_directed_table, phase_num=3)
@@ -253,28 +300,62 @@ for key in tmp_sorted_OrderedDict:
     print(tmp_sorted_OrderedDict[key])
 
 
-which_vector2print = 'V0'
-dict_cnt_limit = len(tmp_sorted_OrderedDict[which_vector2print])
-subplot_cnt = 1
-dict_cnt = 0
-figure_cnt = 1
+PROGRESS = 0
+vector_list = ['V0', 'V1', 'V2', 'V3', 'V4', 'V5', 'V6']
+for key in vector_list:
+    which_vector2print = key  # 'V3'
+    dict_cnt_limit = len(tmp_sorted_OrderedDict[which_vector2print])
+    subplot_cnt = 1
+    dict_cnt = 0
+    # figure_cnt = 1
+
+    with PdfPages(which_vector2print + ".pdf") as pdf:
+        for i in range(0, dict_cnt_limit):
+            fig_handler = plt.figure(i, figsize=(16, 9), dpi=100)
+            topology.f_Graph_plot_graph(tmp_sorted_OrderedDict[which_vector2print][i])
+            pdf.savefig(fig_handler)
+            plt.close()
+            PROGRESS = 100 * (vector_list.index(key) * len(vector_list) + i) / (dict_cnt_limit * len(vector_list))
+            print("Progress = " + str(PROGRESS) + "%")
+
+# fig_handler = plt.figure(figure_cnt, figsize=(16, 9), dpi=100)
+# while True:
+#     with PdfPages(which_vector2print + ".pdf") as pdf:
+#         if dict_cnt >= dict_cnt_limit:
+#             pdf.savefig(fig_handler)
+#             plt.close()
+#             # plt.show()
+#             break
+#         else:
+#             if subplot_cnt > 12:
+#                 subplot_cnt = 1
+#                 figure_cnt += 1
+#                 # plt.show()
+#                 pdf.savefig(fig_handler)
+#                 plt.close()
+#                 fig_handler = plt.figure(figure_cnt, figsize=(16, 9), dpi=100)
+#             else:
+#                 plt.subplot(4, 3, subplot_cnt)
+#                 topology.f_Graph_plot_graph(tmp_sorted_OrderedDict[which_vector2print][dict_cnt])
+#                 subplot_cnt += 1
+#                 dict_cnt += 1
 
 
-while True:
-    if dict_cnt >= dict_cnt_limit:
-        plt.show()
-        break
-    else:
-        if subplot_cnt > 12:
-            subplot_cnt = 1
-            figure_cnt += 1
-            plt.show()
-            plt.figure(figure_cnt)
-        else:
-            plt.subplot(4, 3, subplot_cnt)
-            topology.f_Graph_plot_graph(tmp_sorted_OrderedDict[which_vector2print][dict_cnt])
-            subplot_cnt += 1
-            dict_cnt += 1
+# while True:
+#     if dict_cnt >= dict_cnt_limit:
+#         plt.show()
+#         break
+#     else:
+#         if subplot_cnt > 12:
+#             subplot_cnt = 1
+#             figure_cnt += 1
+#             plt.show()
+#             plt.figure(figure_cnt)
+#         else:
+#             plt.subplot(4, 3, subplot_cnt)
+#             topology.f_Graph_plot_graph(tmp_sorted_OrderedDict[which_vector2print][dict_cnt])
+#             subplot_cnt += 1
+#             dict_cnt += 1
 
 
 

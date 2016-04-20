@@ -46,10 +46,14 @@ def f_Graph_plot_capacitor(directed_adjacency_table_item,
     start_point = directed_adjacency_table_item[0]
     end_point = directed_adjacency_table_item[1]
     capacitor_direction = directed_adjacency_table_item[2]
-    if capacitor_direction > 0:
+    if capacitor_direction == 1:
         capacitor_icon = "+ –"
-    elif capacitor_direction < 0:
+    elif capacitor_direction == -1:
         capacitor_icon = "– +"
+    elif capacitor_direction == 2:
+        capacitor_icon = "+ 2 -"
+    elif capacitor_direction == -2:
+        capacitor_icon = "- 2 +"
     else:  # if there is no capacitor, do noting.
         return
 
