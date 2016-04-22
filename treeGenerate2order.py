@@ -248,42 +248,58 @@ def f_main_two_cap_employ_findall():
 
 connection_table = f_main_two_cap_employ_findall()
 
-def f_filter_sorted_table(connection_table, side = 'InputSide'):
+def f_filter_sorted_table(connection_table, input_vector_category, output_vector_catagory,
+                          which_side_priority = 'InputSide'):
     # No.1 Find all valid table
-    VII = OrderedDict([
-        ('V0', [0, 0, 0]),
-        ('V1', [2, -1, -1]), ('V2', [1, 1, -2]), ('V3', [-1, 2, -1]),
-        ('V4', [-2, 1, 1]), ('V5', [-1, -1, 2]), ('V6', [1, -2, 1])
+    VI = OrderedDict([
+        ('VI_0', [0, 0, 0]),
+        ('VI_1', [1, 0, -1]), ('VI_2', [0, 1, -1]), ('VI_3', [-1, 1, 0]),
+        ('VI_4', [-1, 0, 1]), ('VI_5', [0, -1, 1]), ('VI_6', [1, -1, 0])
     ])
+    VII = OrderedDict([
+        ('VII_0', [0, 0, 0]),
+        ('VII_1', [2, -1, -1]), ('VII_2', [1, 1, -2]), ('VII_3', [-1, 2, -1]),
+        ('VII_4', [-2, 1, 1]), ('VII_5', [-1, -1, 2]), ('VII_6', [1, -2, 1])
+    ])
+    VIII = OrderedDict([
+        ('VIII_0', [0, 0, 0]),
+        ('VIII_1', [2, 0, -2]), ('VIII_2', [0, 2, -2]), ('VIII_3', [-2, 2, 0]),
+        ('VIII_4', [-2, 0, 2]), ('VIII_4', [0, -2, 2]), ('VIII_6', [2, -2, 0])
+    ])
+    vector_refer_dict = {'VI': VI, 'VII': VII, 'VIII': VIII}
+    vector_input_dict = vector_refer_dict[input_vector_category]
+    vector_output_dict = vector_refer_dict[output_vector_catagory]
     for each_topology in connection_table:
-        for vector_key in VII:
+        for vector_key in vector_input_dict:
             # Vin compare
-            if (VII[vector_key][0] == each_topology['V_AB']) \
-                    and (VII[vector_key][1] == each_topology['V_BC'])\
-                    and (VII[vector_key][2] == each_topology['V_CA']):
+            if (vector_input_dict[vector_key][0] == each_topology['V_AB']) \
+                    and (vector_input_dict[vector_key][1] == each_topology['V_BC'])\
+                    and (vector_input_dict[vector_key][2] == each_topology['V_CA']):
                 each_topology['Vin'] = vector_key
+    for each_topology in connection_table:
+        for vector_key in vector_output_dict:
             # Vout compare
-            if (VII[vector_key][0] == each_topology['V_ab']) \
-                    and (VII[vector_key][1] == each_topology['V_bc']) \
-                    and (VII[vector_key][2] == each_topology['V_ca']):
+            if (vector_output_dict[vector_key][0] == each_topology['V_ab']) \
+                    and (vector_output_dict[vector_key][1] == each_topology['V_bc']) \
+                    and (vector_output_dict[vector_key][2] == each_topology['V_ca']):
                 each_topology['Vout'] = vector_key
 
     valid_table = {'V0': [], 'V1': [], 'V2': [], 'V3': [], 'V4': [], 'V5': [], 'V6': []}
     for each_item in connection_table:
         if (each_item['Vin'] != 'None') and (each_item['Vout'] != 'None'):
-            if (each_item['Vin'] == 'V0'):
+            if (each_item['Vin'] == 'VI_0' or each_item['Vin'] == 'VII_0' or each_item['Vin'] == 'VIII_0'):
                 valid_table['V0'].append(each_item)
-            elif (each_item['Vin'] == 'V1'):
+            elif (each_item['Vin'] == 'VI_1' or each_item['Vin'] == 'VII_1' or each_item['Vin'] == 'VIII_1'):
                 valid_table['V1'].append(each_item)
-            elif (each_item['Vin'] == 'V2'):
+            elif (each_item['Vin'] == 'VI_2' or each_item['Vin'] == 'VII_2' or each_item['Vin'] == 'VIII_2'):
                 valid_table['V2'].append(each_item)
-            elif (each_item['Vin'] == 'V3'):
+            elif (each_item['Vin'] == 'VI_3' or each_item['Vin'] == 'VII_3' or each_item['Vin'] == 'VIII_3'):
                 valid_table['V3'].append(each_item)
-            elif (each_item['Vin'] == 'V4'):
+            elif (each_item['Vin'] == 'VI_4' or each_item['Vin'] == 'VII_4' or each_item['Vin'] == 'VIII_4'):
                 valid_table['V4'].append(each_item)
-            elif (each_item['Vin'] == 'V5'):
+            elif (each_item['Vin'] == 'VI_5' or each_item['Vin'] == 'VII_5' or each_item['Vin'] == 'VIII_5'):
                 valid_table['V5'].append(each_item)
-            elif (each_item['Vin'] == 'V6'):
+            elif (each_item['Vin'] == 'VI_6' or each_item['Vin'] == 'VII_6' or each_item['Vin'] == 'VIII_6'):
                 valid_table['V6'].append(each_item)
 
     # No.2 Sort the whole table according to the other side.
@@ -294,29 +310,28 @@ def f_filter_sorted_table(connection_table, side = 'InputSide'):
     return sorted_valid_OrderedDict
 
 
-tmp_sorted_OrderedDict = f_filter_sorted_table(connection_table)
+tmp_sorted_OrderedDict = f_filter_sorted_table(connection_table,
+                                               input_vector_category='VI', output_vector_catagory='VII')
 for key in tmp_sorted_OrderedDict:
-    print("Len = " + str(len(tmp_sorted_OrderedDict[key])), end=" ")
+    print("Len = " + str(len(tmp_sorted_OrderedDict[key])) + '\t' + key, end=" ")
     print(tmp_sorted_OrderedDict[key])
 
 
-PROGRESS = 0
-vector_list = ['V0', 'V1', 'V2', 'V3', 'V4', 'V5', 'V6']
-for key in vector_list:
-    which_vector2print = key  # 'V3'
-    dict_cnt_limit = len(tmp_sorted_OrderedDict[which_vector2print])
-    subplot_cnt = 1
-    dict_cnt = 0
-    # figure_cnt = 1
+def plot_in_pdf(sorted_Orderdict, which_vector_catagory='VI'):
+    vector_list = ['V0', 'V1', 'V2', 'V3', 'V4', 'V5', 'V6']
+    for key_items in vector_list:
+        which_vector2print = key_items  # 'V3'
+        dict_cnt_limit = len(sorted_Orderdict[which_vector2print])
 
-    with PdfPages(which_vector2print + ".pdf") as pdf:
-        for i in range(0, dict_cnt_limit):
-            fig_handler = plt.figure(i, figsize=(16, 9), dpi=100)
-            topology.f_Graph_plot_graph(tmp_sorted_OrderedDict[which_vector2print][i])
-            pdf.savefig(fig_handler)
-            plt.close()
-            PROGRESS = 100 * (vector_list.index(key) * len(vector_list) + i) / (dict_cnt_limit * len(vector_list))
-            print("Progress = " + str(PROGRESS) + "%")
+        with PdfPages(which_vector2print + ".pdf") as pdf:
+            for i in range(0, dict_cnt_limit):
+                fig_handler = plt.figure(i, figsize=(16, 9), dpi=100)
+                topology.f_Graph_plot_graph(sorted_Orderdict[which_vector2print][i])
+                pdf.savefig(fig_handler)
+                plt.close()
+
+
+# plot_in_pdf(tmp_sorted_OrderedDict)
 
 # fig_handler = plt.figure(figure_cnt, figsize=(16, 9), dpi=100)
 # while True:
@@ -356,13 +371,6 @@ for key in vector_list:
 #             topology.f_Graph_plot_graph(tmp_sorted_OrderedDict[which_vector2print][dict_cnt])
 #             subplot_cnt += 1
 #             dict_cnt += 1
-
-
-
-
-
-
-
 
 
 
