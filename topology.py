@@ -3,6 +3,7 @@ import copy as cp
 import itertools
 from collections import OrderedDict
 import matplotlib.pyplot as plt
+from matplotlib.backends.backend_pdf import PdfPages
 
 def f_Graph_connect2point(point_1, point_2):
     plt.plot([point_1[0], point_2[0]], [point_1[1], point_2[1]], color='cornflowerblue')
@@ -21,7 +22,7 @@ def f_Graph_plot_label(directed_adjacency_table_dict):
         plt.text(phase_text[key][0], phase_text[key][1], key, size=20)
 
     # No.2 Plot Vin = V? Vout = V? on the title position
-    plt.text(1.8, 4.5, directed_adjacency_table_dict['Vin'] + "–" + directed_adjacency_table_dict['Vout'], size = 15)
+    plt.text(1.5, 4.5, directed_adjacency_table_dict['Vin'] + "–" + directed_adjacency_table_dict['Vout'], size =12)
     # plt.text(0, 4.5, "Vin = " + directed_adjacency_table_dict['Vin'], size=20)
     # plt.text(2.7, 4.5, "Vout = " + directed_adjacency_table_dict['Vout'], size=20)
 
@@ -117,14 +118,52 @@ def f_Graph_plot_graph(directed_adjacency_table_dict):
     plt.axis('off')
 
 
-def f_Graph_plot_inPage(sorted_OrderedDict, which_vector='V0'):
-    total_graph_count = len(sorted_OrderedDict[which_vector])
-    if total_graph_count % 2 == 0:
-        row_count = total_graph_count // 2
-    else:
-        row_count = total_graph_count // 2 + 1
+def plot_in_pdf(sorted_Orderdict, which_vector_catagory='VI'):
+    vector_list = ['V0', 'V1', 'V2', 'V3', 'V4', 'V5', 'V6']
+    for key_items in vector_list:
+        which_vector2print = key_items  # 'V3'
+        dict_cnt_limit = len(sorted_Orderdict[which_vector2print])
 
-    col_count = 2
-    for total_count in range(0, total_graph_count):
-        plt.subplot(row_count, col_count, total_graph_count + 1)
-        f_Graph_plot_graph(sorted_OrderedDict[which_vector][total_count])
+        with PdfPages(which_vector2print + ".pdf") as pdf:
+            for i in range(0, dict_cnt_limit):
+                fig_handler = plt.figure(i, figsize=(16, 9), dpi=100)
+                f_Graph_plot_graph(sorted_Orderdict[which_vector2print][i])
+                pdf.savefig(fig_handler)
+                plt.close()
+
+def subplot_in_pdf(sorted_Orderdict, pdfname='test'):
+    pdf_handler = PdfPages(pdfname + ".pdf")
+    for each_vector_key in sorted_Orderdict:
+        fig_handler = plt.figure(1, figsize=(16, 9), dpi=100)
+        plt.suptitle("Input Side = " + each_vector_key)
+        sub_fig_cnt = 1
+        for each_toplogy_index, each_topology in enumerate(sorted_Orderdict[each_vector_key]):
+            progress = float(100 * each_toplogy_index / len(sorted_Orderdict[each_vector_key]))
+            print("Producing " + each_vector_key + " : " + '%3.2f %%' % progress)
+            if sub_fig_cnt > 12:
+                sub_fig_cnt = 1
+                pdf_handler.savefig(fig_handler)
+                # plt.show()
+                plt.close()
+                fig_handler = plt.figure(1, figsize=(16, 9), dpi=100)
+                plt.suptitle("Input Side = " + each_vector_key)
+            else:
+                plt.subplot(4, 3, sub_fig_cnt)
+                sub_fig_cnt += 1
+                f_Graph_plot_graph(each_topology)
+        pdf_handler.savefig(fig_handler)
+        plt.close()
+    pdf_handler.close()
+
+
+# def f_Graph_plot_inPage(sorted_OrderedDict, which_vector='V0'):
+#     total_graph_count = len(sorted_OrderedDict[which_vector])
+#     if total_graph_count % 2 == 0:
+#         row_count = total_graph_count // 2
+#     else:
+#         row_count = total_graph_count // 2 + 1
+#
+#     col_count = 2
+#     for total_count in range(0, total_graph_count):
+#         plt.subplot(row_count, col_count, total_graph_count + 1)
+#         f_Graph_plot_graph(sorted_OrderedDict[which_vector][total_count])

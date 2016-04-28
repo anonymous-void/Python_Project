@@ -3,7 +3,6 @@ import numpy as np
 import copy as cp
 from collections import OrderedDict
 import matplotlib.pyplot as plt
-from matplotlib.backends.backend_pdf import PdfPages
 import topology
 
 INF = 9999
@@ -264,7 +263,7 @@ def f_filter_sorted_table(connection_table, input_vector_category, output_vector
     VIII = OrderedDict([
         ('VIII_0', [0, 0, 0]),
         ('VIII_1', [2, 0, -2]), ('VIII_2', [0, 2, -2]), ('VIII_3', [-2, 2, 0]),
-        ('VIII_4', [-2, 0, 2]), ('VIII_4', [0, -2, 2]), ('VIII_6', [2, -2, 0])
+        ('VIII_4', [-2, 0, 2]), ('VIII_5', [0, -2, 2]), ('VIII_6', [2, -2, 0])
     ])
     vector_refer_dict = {'VI': VI, 'VII': VII, 'VIII': VIII}
     vector_input_dict = vector_refer_dict[input_vector_category]
@@ -311,25 +310,14 @@ def f_filter_sorted_table(connection_table, input_vector_category, output_vector
 
 
 tmp_sorted_OrderedDict = f_filter_sorted_table(connection_table,
-                                               input_vector_category='VI', output_vector_catagory='VII')
+                                               input_vector_category='VIII', output_vector_catagory='VIII')
 for key in tmp_sorted_OrderedDict:
     print("Len = " + str(len(tmp_sorted_OrderedDict[key])) + '\t' + key, end=" ")
     print(tmp_sorted_OrderedDict[key])
+# for key in tmp_sorted_OrderedDict['V5']:
+#     print(key)
 
-
-def plot_in_pdf(sorted_Orderdict, which_vector_catagory='VI'):
-    vector_list = ['V0', 'V1', 'V2', 'V3', 'V4', 'V5', 'V6']
-    for key_items in vector_list:
-        which_vector2print = key_items  # 'V3'
-        dict_cnt_limit = len(sorted_Orderdict[which_vector2print])
-
-        with PdfPages(which_vector2print + ".pdf") as pdf:
-            for i in range(0, dict_cnt_limit):
-                fig_handler = plt.figure(i, figsize=(16, 9), dpi=100)
-                topology.f_Graph_plot_graph(sorted_Orderdict[which_vector2print][i])
-                pdf.savefig(fig_handler)
-                plt.close()
-
+topology.subplot_in_pdf(tmp_sorted_OrderedDict, "VIII - VIII (221)")
 
 # plot_in_pdf(tmp_sorted_OrderedDict)
 
