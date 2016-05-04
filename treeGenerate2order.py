@@ -309,57 +309,45 @@ def f_filter_sorted_table(connection_table, input_vector_category, output_vector
     return sorted_valid_OrderedDict
 
 
-tmp_sorted_OrderedDict = f_filter_sorted_table(connection_table,
-                                               input_vector_category='VIII', output_vector_catagory='VIII')
-for key in tmp_sorted_OrderedDict:
-    print("Len = " + str(len(tmp_sorted_OrderedDict[key])) + '\t' + key, end=" ")
-    print(tmp_sorted_OrderedDict[key])
-# for key in tmp_sorted_OrderedDict['V5']:
-#     print(key)
+def f_print_text_table(input_vector_category='VI', output_vector_category='VI'):
+    fp = open(input_vector_category + '-' + output_vector_category + '.txt', 'w')
+    sorted_order_dict = f_filter_sorted_table(connection_table, input_vector_category, output_vector_category)
+    for key in sorted_order_dict:
+        print("Len = " + str(len(sorted_order_dict[key])) + '\t' + key, end=' ')
+        print("-"*100)
+        fp.write("Len = " + str(len(sorted_order_dict[key])) + '\t' + key)
+        fp.write('-'*100)
+        fp.write('\n')
+        for item in sorted_order_dict[key]:
+            print(item)
+            fp.write(key + ':   ')
+            fp.write(str(item))
+            fp.write('\n')
+        fp.write('\n\n')
+    fp.close()
 
+
+# for input_side_key in ['VI', 'VII', 'VIII']:
+#     for output_side_key in ['VI', 'VII', 'VIII']:
+#         f_print_text_table(input_vector_category=input_side_key, output_vector_category=output_side_key)
+# f_print_text_table(input_vector_category='VI', output_vector_category='VII')
+
+
+# f_print_text_table(input_vector_category='VI', output_vector_category='VI')
+# f_print_text_table(input_vector_category='VI', output_vector_category='VII')
+# f_print_text_table(input_vector_category='VI', output_vector_category='VIII')
+#
+# f_print_text_table(input_vector_category='VII', output_vector_category='VI')
+# f_print_text_table(input_vector_category='VII', output_vector_category='VII')
+# f_print_text_table(input_vector_category='VII', output_vector_category='VIII')
+#
+# f_print_text_table(input_vector_category='VIII', output_vector_category='VI')
+# f_print_text_table(input_vector_category='VIII', output_vector_category='VII')
+# f_print_text_table(input_vector_category='VIII', output_vector_category='VIII')
+
+
+tmp_sorted_OrderedDict = f_filter_sorted_table(connection_table,
+                                               input_vector_category='VII', output_vector_catagory='VII')
 topology.subplot_in_pdf(tmp_sorted_OrderedDict, "VIII - VIII (221)")
 
-# plot_in_pdf(tmp_sorted_OrderedDict)
 
-# fig_handler = plt.figure(figure_cnt, figsize=(16, 9), dpi=100)
-# while True:
-#     with PdfPages(which_vector2print + ".pdf") as pdf:
-#         if dict_cnt >= dict_cnt_limit:
-#             pdf.savefig(fig_handler)
-#             plt.close()
-#             # plt.show()
-#             break
-#         else:
-#             if subplot_cnt > 12:
-#                 subplot_cnt = 1
-#                 figure_cnt += 1
-#                 # plt.show()
-#                 pdf.savefig(fig_handler)
-#                 plt.close()
-#                 fig_handler = plt.figure(figure_cnt, figsize=(16, 9), dpi=100)
-#             else:
-#                 plt.subplot(4, 3, subplot_cnt)
-#                 topology.f_Graph_plot_graph(tmp_sorted_OrderedDict[which_vector2print][dict_cnt])
-#                 subplot_cnt += 1
-#                 dict_cnt += 1
-
-
-# while True:
-#     if dict_cnt >= dict_cnt_limit:
-#         plt.show()
-#         break
-#     else:
-#         if subplot_cnt > 12:
-#             subplot_cnt = 1
-#             figure_cnt += 1
-#             plt.show()
-#             plt.figure(figure_cnt)
-#         else:
-#             plt.subplot(4, 3, subplot_cnt)
-#             topology.f_Graph_plot_graph(tmp_sorted_OrderedDict[which_vector2print][dict_cnt])
-#             subplot_cnt += 1
-#             dict_cnt += 1
-
-
-
-# plt.show()
