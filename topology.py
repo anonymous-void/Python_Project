@@ -147,6 +147,8 @@ def subplot_in_pdf(sorted_Orderdict, pdfname='test'):
                 plt.close()
                 fig_handler = plt.figure(1, figsize=(16, 9), dpi=100)
                 plt.suptitle("Input Side = " + each_vector_key)
+                plt.subplot(4, 3, sub_fig_cnt)
+                f_Graph_plot_graph(each_topology)
             else:
                 plt.subplot(4, 3, sub_fig_cnt)
                 sub_fig_cnt += 1
@@ -154,6 +156,7 @@ def subplot_in_pdf(sorted_Orderdict, pdfname='test'):
         pdf_handler.savefig(fig_handler)
         plt.close()
     pdf_handler.close()
+
 
 
 # def f_Graph_plot_inPage(sorted_OrderedDict, which_vector='V0'):

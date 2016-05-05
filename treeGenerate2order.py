@@ -245,7 +245,7 @@ def f_main_two_cap_employ_findall():
     return two_cap_employ_table
 
 
-connection_table = f_main_two_cap_employ_findall()
+
 
 def f_filter_sorted_table(connection_table, input_vector_category, output_vector_catagory,
                           which_side_priority = 'InputSide'):
@@ -311,7 +311,8 @@ def f_filter_sorted_table(connection_table, input_vector_category, output_vector
 
 def f_print_text_table(input_vector_category='VI', output_vector_category='VI'):
     fp = open(input_vector_category + '-' + output_vector_category + '.txt', 'w')
-    sorted_order_dict = f_filter_sorted_table(connection_table, input_vector_category, output_vector_category)
+    tmp_connection_table = f_main_two_cap_employ_findall()
+    sorted_order_dict = f_filter_sorted_table(tmp_connection_table, input_vector_category, output_vector_category)
     for key in sorted_order_dict:
         print("Len = " + str(len(sorted_order_dict[key])) + '\t' + key, end=' ')
         print("-"*100)
@@ -327,14 +328,28 @@ def f_print_text_table(input_vector_category='VI', output_vector_category='VI'):
     fp.close()
 
 
+def plot_all_in_seperate_pdf(input_range, output_range):
+    # temperarly bug exist, dont use!
+    for input_side_key in input_range:
+        for output_side_key in output_range:
+            sorted_order_dict = f_filter_sorted_table(connection_table,
+                                input_vector_category=input_side_key, output_vector_catagory=output_side_key)
+            topology.subplot_in_pdf(sorted_order_dict, input_side_key + " - " + output_side_key + " (221)")
+
+
+
+
+# a2 = f_filter_sorted_table(connection_table, input_vector_category='VI', output_vector_catagory='VI')
+
+
 # for input_side_key in ['VI', 'VII', 'VIII']:
 #     for output_side_key in ['VI', 'VII', 'VIII']:
 #         f_print_text_table(input_vector_category=input_side_key, output_vector_category=output_side_key)
 # f_print_text_table(input_vector_category='VI', output_vector_category='VII')
 
 
-# f_print_text_table(input_vector_category='VI', output_vector_category='VI')
-# f_print_text_table(input_vector_category='VI', output_vector_category='VII')
+f_print_text_table(input_vector_category='VI', output_vector_category='VI')
+f_print_text_table(input_vector_category='VI', output_vector_category='VII')
 # f_print_text_table(input_vector_category='VI', output_vector_category='VIII')
 #
 # f_print_text_table(input_vector_category='VII', output_vector_category='VI')
@@ -346,8 +361,10 @@ def f_print_text_table(input_vector_category='VI', output_vector_category='VI'):
 # f_print_text_table(input_vector_category='VIII', output_vector_category='VIII')
 
 
-tmp_sorted_OrderedDict = f_filter_sorted_table(connection_table,
-                                               input_vector_category='VII', output_vector_catagory='VII')
-topology.subplot_in_pdf(tmp_sorted_OrderedDict, "VIII - VIII (221)")
+# tmp_sorted_OrderedDict = f_filter_sorted_table(connection_table,
+#                                                input_vector_category='VI', output_vector_catagory='VII')
+# topology.subplot_in_pdf(tmp_sorted_OrderedDict, "VI - VII (221)")
+
+
 
 
