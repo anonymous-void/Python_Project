@@ -218,17 +218,18 @@ def f_vector_calc(directed_adjacency_table, phase_num=2):
     return vector2ret
 
 
+
+
+
 # main code start here
-
-Tree_Mat = f_find_all_combination_matrix(avBranch2, combination_num=5, vertex_num=6)
-
 # Main loop for finding all structure of 2 cap employment
 def f_main_two_cap_employ_findall():
+    Tree_Mat = f_find_all_combination_matrix(avBranch2, combination_num=5, vertex_num=6)
     total_counter = 0
     two_cap_employ_table = list([])
     for tree_index, tree_item in enumerate(Tree_Mat):
         undirected_table_of_a_tree = f_undirected_adjMatrix2Tab(tree_item)
-        directed_table_after_cap_employ = f_employ_capacitor_2_2_1(undirected_table_of_a_tree)
+        directed_table_after_cap_employ = f_employ_capacitor_2_1_1(undirected_table_of_a_tree)
         print('Tree No. ' + str(tree_index))
         for each_directed_table in directed_table_after_cap_employ:
             each_vector = f_vector_calc(each_directed_table, phase_num=3)
@@ -338,32 +339,21 @@ def plot_all_in_seperate_pdf(input_range, output_range):
             topology.subplot_in_pdf(sorted_order_dict, input_side_key + " - " + output_side_key + " (221)")
 
 
-plot_all_in_seperate_pdf(input_range=['VI', 'VII', 'VIII'], output_range=['VI', 'VII', 'VIII'])
+# plot_all_in_seperate_pdf(input_range=['VI', 'VII', 'VIII'], output_range=['VI', 'VII', 'VIII'])
 
 
 # for input_side_key in ['VI', 'VII', 'VIII']:
 #     for output_side_key in ['VI', 'VII', 'VIII']:
 #         f_print_text_table(input_vector_category=input_side_key, output_vector_category=output_side_key)
-# f_print_text_table(input_vector_category='VI', output_vector_category='VII')
-
-
 # f_print_text_table(input_vector_category='VI', output_vector_category='VI')
-# f_print_text_table(input_vector_category='VI', output_vector_category='VII')
-# f_print_text_table(input_vector_category='VI', output_vector_category='VIII')
+
+
+
 #
-# f_print_text_table(input_vector_category='VII', output_vector_category='VI')
-# f_print_text_table(input_vector_category='VII', output_vector_category='VII')
-# f_print_text_table(input_vector_category='VII', output_vector_category='VIII')
 #
-# f_print_text_table(input_vector_category='VIII', output_vector_category='VI')
-# f_print_text_table(input_vector_category='VIII', output_vector_category='VII')
-# f_print_text_table(input_vector_category='VIII', output_vector_category='VIII')
-
-
-# tmp_sorted_OrderedDict = f_filter_sorted_table(connection_table,
-#                                                input_vector_category='VI', output_vector_catagory='VII')
-# topology.subplot_in_pdf(tmp_sorted_OrderedDict, "VI - VII (221)")
-
-
+# tmp_sorted_OrderedDict = f_filter_sorted_table(f_main_two_cap_employ_findall(),
+#                                                input_vector_category='VI', output_vector_catagory='VI')
+# topology.subplot_in_pdf(tmp_sorted_OrderedDict, "VI - VI (211)")
+#
 
 
