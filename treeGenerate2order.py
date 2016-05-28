@@ -229,7 +229,7 @@ def f_main_two_cap_employ_findall():
     two_cap_employ_table = list([])
     for tree_index, tree_item in enumerate(Tree_Mat):
         undirected_table_of_a_tree = f_undirected_adjMatrix2Tab(tree_item)
-        directed_table_after_cap_employ = f_employ_capacitor_2_1_1(undirected_table_of_a_tree)
+        directed_table_after_cap_employ = f_employ_capacitor_2_2_1(undirected_table_of_a_tree)
         print('Tree No. ' + str(tree_index))
         for each_directed_table in directed_table_after_cap_employ:
             each_vector = f_vector_calc(each_directed_table, phase_num=3)
@@ -339,7 +339,7 @@ def plot_all_in_seperate_pdf(input_range, output_range):
             topology.subplot_in_pdf(sorted_order_dict, input_side_key + " - " + output_side_key + " (221)")
 
 
-# plot_all_in_seperate_pdf(input_range=['VI', 'VII', 'VIII'], output_range=['VI', 'VII', 'VIII'])
+plot_all_in_seperate_pdf(input_range=['VI'], output_range=['VIII'])
 
 
 # for input_side_key in ['VI', 'VII', 'VIII']:

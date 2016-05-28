@@ -22,6 +22,21 @@ def dfs(node, undirected_adjacency_matrix, book, vertex_num):
             dfs(cnt, undirected_adjacency_matrix, book, vertex_num)
     return
 
+def f_undirected_adjMatrix2Tab(undirected_adjacency_matrix):
+    # Convert undirected adjacency matrix to undirected adjacency table
+    if undirected_adjacency_matrix.shape[0] != undirected_adjacency_matrix.shape[1]:
+        print("Error! SYM: Not a square matrix !")
+        return
+    else:
+        dimension = undirected_adjacency_matrix.shape[0]
+        undirected_tab2ret = []
+        for rCnt in range(0, dimension):
+            for cCnt in range(rCnt, dimension):
+                if undirected_adjacency_matrix[rCnt][cCnt] == 1:
+                    tmp_tab = [rCnt, cCnt, 0]
+                    undirected_tab2ret.append(tmp_tab)
+        return undirected_tab2ret
+
 def f_find_all_non_tree(available_branch, combination_num, vertex_num):
     non_tree_mat = []
     non_tree_cnt = 0
@@ -44,9 +59,55 @@ def f_find_all_non_tree(available_branch, combination_num, vertex_num):
     return non_tree_mat
 
 
-non_Tree_Mat = f_find_all_non_tree(avBranch2, combination_num=5, vertex_num=6)
-for item in non_Tree_Mat:
-    print(item)
-    print('-'*100)
+def f_find_all_tree(available_branch, combination_num, vertex_num):
+    non_tree_mat = []
+    non_tree_cnt = 0
+    all_combination = list(itertools.combinations(available_branch, combination_num))
+    print("Find " + str(len(all_combination)) + " kinds of combinations")  # Debug only
+    for item in all_combination:
+        tmp_mat = np.array([[INF] * vertex_num] * vertex_num)
+        for i in range(0, vertex_num):
+            tmp_mat[i][i] = 0
+        for idx in item:
+            tmp_mat[idx[0]][idx[1]] = 1
+            tmp_mat[idx[1]][idx[0]] = 1
+        BOOK = [0] * vertex_num
+        BOOK[0] = 1
+        dfs(0, tmp_mat, BOOK, vertex_num)
+        if sum(BOOK) == vertex_num:
+            non_tree_mat.append(tmp_mat)
+            non_tree_cnt += 1
+    print("There are " + str(non_tree_cnt) + " kinds of non-trees")  #Debug only
+    return non_tree_mat
 
-# print(non_Tree_Mat[0])
+
+def f_Graph_plot_undirected_table(input_undirected_tab):
+    position_dict = {0: (0, 4), 1: (0, 2), 2: (0, 0), 3: (4, 4), 4: (4, 2), 5: (4, 0)}
+    for items in input_undirected_tab:
+        topology.f_Graph_connect2point(position_dict[items[0]], position_dict[items[1]])
+
+
+def f_Graph_sub_plot_undirected_adjMatrix(input_adjmatrix, sub_row, sub_col):
+    total_plot = sub_row * sub_col
+    plot_cnt = 1
+    fig_handler = plt.figure(1, figsize=(16, 9), dpi=100)
+    for each_matrix in input_adjmatrix:
+        each_undirected_tab = f_undirected_adjMatrix2Tab(each_matrix)
+        plt.subplot(sub_row, sub_col, plot_cnt)
+        f_Graph_plot_undirected_table(each_undirected_tab)
+        topology.f_Graph_plot_node([(0, 4), (0, 2), (0, 0), (4, 4), (4, 2), (4, 0)])
+        plt.title(str(plot_cnt))
+        # plt.margins(0.1)
+        plt.axis('off')
+        plot_cnt = plot_cnt + 1
+        if plot_cnt > total_plot:
+            break
+
+
+non_Tree_Mat = f_find_all_non_tree(avBranch2, combination_num=5, vertex_num=6)
+Tree_Mat = f_find_all_tree(avBranch2, combination_num=5, vertex_num=6)
+
+f_Graph_sub_plot_undirected_adjMatrix(Tree_Mat, 9, 9)
+
+plt.show()
+plt.close()
