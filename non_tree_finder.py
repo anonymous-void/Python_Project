@@ -104,10 +104,9 @@ def f_Graph_sub_plot_undirected_adjMatrix(input_adjmatrix, sub_row, sub_col):
             break
 
 
-non_Tree_Mat = f_find_all_non_tree(avBranch2, combination_num=5, vertex_num=6)
-Tree_Mat = f_find_all_tree(avBranch2, combination_num=5, vertex_num=6)
-
-f_Graph_sub_plot_undirected_adjMatrix(Tree_Mat, 9, 9)
-
-plt.show()
-plt.close()
+# non_Tree_Mat = f_find_all_non_tree(avBranch2, combination_num=5, vertex_num=6)
+# Tree_Mat = f_find_all_tree(avBranch2, combination_num=5, vertex_num=6)
+# print(Tree_Mat)
+# f_Graph_sub_plot_undirected_adjMatrix(Tree_Mat, 9, 9)
+# plt.show()
+# plt.close()
