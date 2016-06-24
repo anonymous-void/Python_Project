@@ -117,28 +117,142 @@ def branch_current_of_a_tree(ob_undirected_adj_mat):
     return current_dict4ret
 
 
+def branch_current_reduce(ob_np_matrix):
+    for row in range(0, 9):
+        if ob_np_matrix[row][0] == ob_np_matrix[row][1] and ob_np_matrix[row][0] != 0 and ob_np_matrix[row][2] == 0:
+            ob_np_matrix[row][2] = -ob_np_matrix[row][0]
+            ob_np_matrix[row][0] = 0
+            ob_np_matrix[row][1] = 0
+        elif ob_np_matrix[row][0] == ob_np_matrix[row][2] and ob_np_matrix[row][2] != 0 and ob_np_matrix[row][1] == 0:
+            ob_np_matrix[row][1] = -ob_np_matrix[row][0]
+            ob_np_matrix[row][0] = 0
+            ob_np_matrix[row][2] = 0
+        elif ob_np_matrix[row][1] == ob_np_matrix[row][2] and ob_np_matrix[row][1] != 0 and ob_np_matrix[row][0] == 0:
+            ob_np_matrix[row][0] = -ob_np_matrix[row][2]
+            ob_np_matrix[row][1] = 0
+            ob_np_matrix[row][2] = 0
+        elif ob_np_matrix[row][0] == ob_np_matrix[row][1] and ob_np_matrix[row][1] == ob_np_matrix[row][2]:
+            ob_np_matrix[row][0] = 0
+            ob_np_matrix[row][1] = 0
+            ob_np_matrix[row][2] = 0
+
+        if ob_np_matrix[row][3] == ob_np_matrix[row][4] and ob_np_matrix[row][3] != 0 and ob_np_matrix[row][5] == 0:
+            ob_np_matrix[row][5] = -ob_np_matrix[row][3]
+            ob_np_matrix[row][3] = 0
+            ob_np_matrix[row][4] = 0
+        elif ob_np_matrix[row][3] == ob_np_matrix[row][5] and ob_np_matrix[row][5] != 0 and ob_np_matrix[row][4] == 0:
+            ob_np_matrix[row][4] = -ob_np_matrix[row][3]
+            ob_np_matrix[row][3] = 0
+            ob_np_matrix[row][5] = 0
+        elif ob_np_matrix[row][4] == ob_np_matrix[row][5] and ob_np_matrix[row][4] != 0 and ob_np_matrix[row][3] == 0:
+            ob_np_matrix[row][3] = -ob_np_matrix[row][5]
+            ob_np_matrix[row][4] = 0
+            ob_np_matrix[row][5] = 0
+        elif ob_np_matrix[row][3] == ob_np_matrix[row][4] and ob_np_matrix[row][4] == ob_np_matrix[row][5]:
+            ob_np_matrix[row][3] = 0
+            ob_np_matrix[row][4] = 0
+            ob_np_matrix[row][5] = 0
+
+
+def branch_current_to_C_array(ob_many_trees):
+    fp = open('branch_current_C_array.txt', 'w')
+    fp.writelines('double current_array[81][9][6] = {')
+    fp.writelines('\n')
+    for idx, item in enumerate(ob_many_trees):
+        tmp_branch_current = branch_current_of_a_tree(item)
+        branch_current_reduce(tmp_branch_current)
+        fp.writelines('{')
+        for row in range(0, 6):
+            fp.writelines('    {')
+            for col in range(0, 6):
+                fp.writelines(str(tmp_branch_current[row][col]))
+                if col < 5:
+                    fp.writelines(', ')
+            if row < 5:
+                fp.writelines('},\n')
+            elif row == 5:
+                fp.writelines('}')
+        if idx < 81 - 1:
+            fp.writelines(' },\n\n')
+        elif idx == 81 - 1:
+            fp.writelines(' }\n')
+    fp.writelines('};')
+    fp.close()
+
+
+def tree_to_C_array(ob_many_trees):
+    fp = open('tree_C_array.txt', 'w')
+    fp.writelines('int gi_Tree[81][3][3] = {')
+    fp.writelines('\n')
+    for idx, item in enumerate(ob_many_trees):
+        tmp_tree = undirected_adjMat2SwMat(item)
+        fp.writelines('{')
+        for row in range(0, 3):
+            fp.writelines('    {')
+            for col in range(0, 3):
+                if tmp_tree[row][col] != 1:
+                    fp.writelines('INF')
+                else:
+                    fp.writelines(str(tmp_tree[row][col]))
+                if col < 2:
+                    fp.writelines(', ')
+            if row < 2:
+                fp.writelines('}, \n')
+            elif row == 2:
+                fp.writelines(' }')
+        if idx < 81 - 1:
+            fp.writelines(' }, \n\n')
+        elif idx == 81 - 1:
+            fp.writelines(' }\n')
+    fp.writelines('};')
+    fp.close()
+
+
 Tree_Mat = f_find_all_tree(avBranch2, combination_num=5, vertex_num=6)
-# print(Tree_Mat[0])
-# for idx, item in enumerate(Tree_Mat):
-#     tmpObj = gcl_Topology()
-#     tmpObj.swMat = undirected_adjMat2SwMat(item)
-#     tmpObj.treeNum = idx + 1
-#     tree.append(tmpObj)
-    # print(undirected_adjMat2SwMat(item))
-    # print('-' * 50)
-# cur_vector = equ_branch_cur_vector_for_a_tree(undirected_adjMat2SwMat(Tree_Mat[0]))
-# expr_iA = sum( cur_vector[0] * np.array([iAx, iAy, iAz, iBx, iBy, iBz, iCx, iCy, iCz]) )
-s = equ_calc_cur_for_a_tree(Tree_Mat[0])
-sm = branch_current_of_a_tree(Tree_Mat[0])
+VIN = [[0, 0, 0], [1, 0, 0], [1, 1, 0], [0, 1, 0], [0, 1, 1], [0, 0, 1], [1, 0, 1],
+                   [2, 0, 1], [2, 1, 0], [1, 2, 0], [0, 2, 1], [0, 1, 2], [1, 0, 2],
+                   [2, 0, 0], [2, 2, 0], [0, 2, 0], [0, 2, 2], [0, 0, 2], [2, 0, 2] ]
+VOUT = [[0, 0, 0], [1, 0, 0], [1, 1, 0], [0, 1, 0], [0, 1, 1], [0, 0, 1], [1, 0, 1],
+                   [2, 0, 1], [2, 1, 0], [1, 2, 0], [0, 2, 1], [0, 1, 2], [1, 0, 2],
+                   [2, 0, 0], [2, 2, 0], [0, 2, 0], [0, 2, 2], [0, 0, 2], [2, 0, 2] ]
 
-print(sm)
+# for i in range(0, len(VIN)): # 用来测试是否会出现：蒙板把所有电容支路挡住的情况
+#     for j in range(0, len(VOUT)):
+#         availble_mat = np.zeros((3, 3))
+#         for row in range(0, 3):
+#             for col in range(0, 3):
+#                 availble_mat[row][col] = VIN[i][row] - VOUT[j][col]
+#
+#         for idx, item in enumerate(Tree_Mat):
+#             tree_mask = undirected_adjMat2SwMat(item)
+#             sw_mat = np.zeros((3, 3))
+#             non_zero_sum = 0
+#             for row in range(0, 3):
+#                 for col in range(0, 3):
+#                     if tree_mask[row][col] == INF:
+#                         sw_mat[row][col] = INF
+#                     else:
+#                         sw_mat[row][col] = tree_mask[row][col] * availble_mat[row][col]
+#                         if sw_mat[row][col] != 0:
+#                             non_zero_sum += 1
+#
+#             if non_zero_sum == 0:
+#                 print("Vin = V%i, Vout = V%i, Tnum = %i\n" % (i, j, idx+1))
 
 
 
 
-# var = [iAx, iAy, iAz, iBx, iCx]
-# s = solve([eq1, eq2, eq3, eq4, eq5], var)
+
+s = equ_calc_cur_for_a_tree(Tree_Mat[2])
+sm = branch_current_of_a_tree(Tree_Mat[2])
+
+# print(sm)
+# branch_current_reduce(sm)
+# print(sm)
+
 
 for key in s:
     print(str(key) + ':\t' + str(s[key]))
 
+# branch_current_to_C_array(Tree_Mat)
+# tree_to_C_array(Tree_Mat)

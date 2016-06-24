@@ -1,0 +1,325 @@
+int gi_Tree[81][3][3] = {
+{    {1, 1, 1}, 
+    {1, INF, INF}, 
+    {1, INF, INF } }, 
+
+{    {1, 1, 1}, 
+    {1, INF, INF}, 
+    {INF, 1, INF } }, 
+
+{    {1, 1, 1}, 
+    {1, INF, INF}, 
+    {INF, INF, 1 } }, 
+
+{    {1, 1, 1}, 
+    {INF, 1, INF}, 
+    {1, INF, INF } }, 
+
+{    {1, 1, 1}, 
+    {INF, 1, INF}, 
+    {INF, 1, INF } }, 
+
+{    {1, 1, 1}, 
+    {INF, 1, INF}, 
+    {INF, INF, 1 } }, 
+
+{    {1, 1, 1}, 
+    {INF, INF, 1}, 
+    {1, INF, INF } }, 
+
+{    {1, 1, 1}, 
+    {INF, INF, 1}, 
+    {INF, 1, INF } }, 
+
+{    {1, 1, 1}, 
+    {INF, INF, 1}, 
+    {INF, INF, 1 } }, 
+
+{    {1, 1, INF}, 
+    {1, INF, 1}, 
+    {1, INF, INF } }, 
+
+{    {1, 1, INF}, 
+    {1, INF, 1}, 
+    {INF, 1, INF } }, 
+
+{    {1, 1, INF}, 
+    {1, INF, 1}, 
+    {INF, INF, 1 } }, 
+
+{    {1, 1, INF}, 
+    {1, INF, INF}, 
+    {1, INF, 1 } }, 
+
+{    {1, 1, INF}, 
+    {1, INF, INF}, 
+    {INF, 1, 1 } }, 
+
+{    {1, 1, INF}, 
+    {INF, 1, 1}, 
+    {1, INF, INF } }, 
+
+{    {1, 1, INF}, 
+    {INF, 1, 1}, 
+    {INF, 1, INF } }, 
+
+{    {1, 1, INF}, 
+    {INF, 1, 1}, 
+    {INF, INF, 1 } }, 
+
+{    {1, 1, INF}, 
+    {INF, 1, INF}, 
+    {1, INF, 1 } }, 
+
+{    {1, 1, INF}, 
+    {INF, 1, INF}, 
+    {INF, 1, 1 } }, 
+
+{    {1, 1, INF}, 
+    {INF, INF, 1}, 
+    {1, INF, 1 } }, 
+
+{    {1, 1, INF}, 
+    {INF, INF, 1}, 
+    {INF, 1, 1 } }, 
+
+{    {1, INF, 1}, 
+    {1, 1, INF}, 
+    {1, INF, INF } }, 
+
+{    {1, INF, 1}, 
+    {1, 1, INF}, 
+    {INF, 1, INF } }, 
+
+{    {1, INF, 1}, 
+    {1, 1, INF}, 
+    {INF, INF, 1 } }, 
+
+{    {1, INF, 1}, 
+    {1, INF, INF}, 
+    {1, 1, INF } }, 
+
+{    {1, INF, 1}, 
+    {1, INF, INF}, 
+    {INF, 1, 1 } }, 
+
+{    {1, INF, 1}, 
+    {INF, 1, 1}, 
+    {1, INF, INF } }, 
+
+{    {1, INF, 1}, 
+    {INF, 1, 1}, 
+    {INF, 1, INF } }, 
+
+{    {1, INF, 1}, 
+    {INF, 1, 1}, 
+    {INF, INF, 1 } }, 
+
+{    {1, INF, 1}, 
+    {INF, 1, INF}, 
+    {1, 1, INF } }, 
+
+{    {1, INF, 1}, 
+    {INF, 1, INF}, 
+    {INF, 1, 1 } }, 
+
+{    {1, INF, 1}, 
+    {INF, INF, 1}, 
+    {1, 1, INF } }, 
+
+{    {1, INF, 1}, 
+    {INF, INF, 1}, 
+    {INF, 1, 1 } }, 
+
+{    {1, INF, INF}, 
+    {1, 1, 1}, 
+    {1, INF, INF } }, 
+
+{    {1, INF, INF}, 
+    {1, 1, 1}, 
+    {INF, 1, INF } }, 
+
+{    {1, INF, INF}, 
+    {1, 1, 1}, 
+    {INF, INF, 1 } }, 
+
+{    {1, INF, INF}, 
+    {1, 1, INF}, 
+    {1, INF, 1 } }, 
+
+{    {1, INF, INF}, 
+    {1, 1, INF}, 
+    {INF, 1, 1 } }, 
+
+{    {1, INF, INF}, 
+    {1, INF, 1}, 
+    {1, 1, INF } }, 
+
+{    {1, INF, INF}, 
+    {1, INF, 1}, 
+    {INF, 1, 1 } }, 
+
+{    {1, INF, INF}, 
+    {1, INF, INF}, 
+    {1, 1, 1 } }, 
+
+{    {1, INF, INF}, 
+    {INF, 1, 1}, 
+    {1, 1, INF } }, 
+
+{    {1, INF, INF}, 
+    {INF, 1, 1}, 
+    {1, INF, 1 } }, 
+
+{    {1, INF, INF}, 
+    {INF, 1, INF}, 
+    {1, 1, 1 } }, 
+
+{    {1, INF, INF}, 
+    {INF, INF, 1}, 
+    {1, 1, 1 } }, 
+
+{    {INF, 1, 1}, 
+    {1, 1, INF}, 
+    {1, INF, INF } }, 
+
+{    {INF, 1, 1}, 
+    {1, 1, INF}, 
+    {INF, 1, INF } }, 
+
+{    {INF, 1, 1}, 
+    {1, 1, INF}, 
+    {INF, INF, 1 } }, 
+
+{    {INF, 1, 1}, 
+    {1, INF, 1}, 
+    {1, INF, INF } }, 
+
+{    {INF, 1, 1}, 
+    {1, INF, 1}, 
+    {INF, 1, INF } }, 
+
+{    {INF, 1, 1}, 
+    {1, INF, 1}, 
+    {INF, INF, 1 } }, 
+
+{    {INF, 1, 1}, 
+    {1, INF, INF}, 
+    {1, 1, INF } }, 
+
+{    {INF, 1, 1}, 
+    {1, INF, INF}, 
+    {1, INF, 1 } }, 
+
+{    {INF, 1, 1}, 
+    {INF, 1, INF}, 
+    {1, 1, INF } }, 
+
+{    {INF, 1, 1}, 
+    {INF, 1, INF}, 
+    {1, INF, 1 } }, 
+
+{    {INF, 1, 1}, 
+    {INF, INF, 1}, 
+    {1, 1, INF } }, 
+
+{    {INF, 1, 1}, 
+    {INF, INF, 1}, 
+    {1, INF, 1 } }, 
+
+{    {INF, 1, INF}, 
+    {1, 1, 1}, 
+    {1, INF, INF } }, 
+
+{    {INF, 1, INF}, 
+    {1, 1, 1}, 
+    {INF, 1, INF } }, 
+
+{    {INF, 1, INF}, 
+    {1, 1, 1}, 
+    {INF, INF, 1 } }, 
+
+{    {INF, 1, INF}, 
+    {1, 1, INF}, 
+    {1, INF, 1 } }, 
+
+{    {INF, 1, INF}, 
+    {1, 1, INF}, 
+    {INF, 1, 1 } }, 
+
+{    {INF, 1, INF}, 
+    {1, INF, 1}, 
+    {1, 1, INF } }, 
+
+{    {INF, 1, INF}, 
+    {1, INF, 1}, 
+    {INF, 1, 1 } }, 
+
+{    {INF, 1, INF}, 
+    {1, INF, INF}, 
+    {1, 1, 1 } }, 
+
+{    {INF, 1, INF}, 
+    {INF, 1, 1}, 
+    {1, 1, INF } }, 
+
+{    {INF, 1, INF}, 
+    {INF, 1, 1}, 
+    {1, INF, 1 } }, 
+
+{    {INF, 1, INF}, 
+    {INF, 1, INF}, 
+    {1, 1, 1 } }, 
+
+{    {INF, 1, INF}, 
+    {INF, INF, 1}, 
+    {1, 1, 1 } }, 
+
+{    {INF, INF, 1}, 
+    {1, 1, 1}, 
+    {1, INF, INF } }, 
+
+{    {INF, INF, 1}, 
+    {1, 1, 1}, 
+    {INF, 1, INF } }, 
+
+{    {INF, INF, 1}, 
+    {1, 1, 1}, 
+    {INF, INF, 1 } }, 
+
+{    {INF, INF, 1}, 
+    {1, 1, INF}, 
+    {1, INF, 1 } }, 
+
+{    {INF, INF, 1}, 
+    {1, 1, INF}, 
+    {INF, 1, 1 } }, 
+
+{    {INF, INF, 1}, 
+    {1, INF, 1}, 
+    {1, 1, INF } }, 
+
+{    {INF, INF, 1}, 
+    {1, INF, 1}, 
+    {INF, 1, 1 } }, 
+
+{    {INF, INF, 1}, 
+    {1, INF, INF}, 
+    {1, 1, 1 } }, 
+
+{    {INF, INF, 1}, 
+    {INF, 1, 1}, 
+    {1, 1, INF } }, 
+
+{    {INF, INF, 1}, 
+    {INF, 1, 1}, 
+    {1, INF, 1 } }, 
+
+{    {INF, INF, 1}, 
+    {INF, 1, INF}, 
+    {1, 1, 1 } }, 
+
+{    {INF, INF, 1}, 
+    {INF, INF, 1}, 
+    {1, 1, 1 } }
+};
