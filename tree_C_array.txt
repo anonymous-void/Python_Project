@@ -1,325 +1,487 @@
 int gi_Tree[81][3][3] = {
-{    {1, 1, 1}, 
+{
+//Tree No.0
+    {1, 1, 1}, 
     {1, INF, INF}, 
     {1, INF, INF } }, 
 
-{    {1, 1, 1}, 
+{
+//Tree No.1
+    {1, 1, 1}, 
     {1, INF, INF}, 
     {INF, 1, INF } }, 
 
-{    {1, 1, 1}, 
+{
+//Tree No.2
+    {1, 1, 1}, 
     {1, INF, INF}, 
     {INF, INF, 1 } }, 
 
-{    {1, 1, 1}, 
+{
+//Tree No.3
+    {1, 1, 1}, 
     {INF, 1, INF}, 
     {1, INF, INF } }, 
 
-{    {1, 1, 1}, 
+{
+//Tree No.4
+    {1, 1, 1}, 
     {INF, 1, INF}, 
     {INF, 1, INF } }, 
 
-{    {1, 1, 1}, 
+{
+//Tree No.5
+    {1, 1, 1}, 
     {INF, 1, INF}, 
     {INF, INF, 1 } }, 
 
-{    {1, 1, 1}, 
+{
+//Tree No.6
+    {1, 1, 1}, 
     {INF, INF, 1}, 
     {1, INF, INF } }, 
 
-{    {1, 1, 1}, 
+{
+//Tree No.7
+    {1, 1, 1}, 
     {INF, INF, 1}, 
     {INF, 1, INF } }, 
 
-{    {1, 1, 1}, 
+{
+//Tree No.8
+    {1, 1, 1}, 
     {INF, INF, 1}, 
     {INF, INF, 1 } }, 
 
-{    {1, 1, INF}, 
+{
+//Tree No.9
+    {1, 1, INF}, 
     {1, INF, 1}, 
     {1, INF, INF } }, 
 
-{    {1, 1, INF}, 
+{
+//Tree No.10
+    {1, 1, INF}, 
     {1, INF, 1}, 
     {INF, 1, INF } }, 
 
-{    {1, 1, INF}, 
+{
+//Tree No.11
+    {1, 1, INF}, 
     {1, INF, 1}, 
     {INF, INF, 1 } }, 
 
-{    {1, 1, INF}, 
+{
+//Tree No.12
+    {1, 1, INF}, 
     {1, INF, INF}, 
     {1, INF, 1 } }, 
 
-{    {1, 1, INF}, 
+{
+//Tree No.13
+    {1, 1, INF}, 
     {1, INF, INF}, 
     {INF, 1, 1 } }, 
 
-{    {1, 1, INF}, 
+{
+//Tree No.14
+    {1, 1, INF}, 
     {INF, 1, 1}, 
     {1, INF, INF } }, 
 
-{    {1, 1, INF}, 
+{
+//Tree No.15
+    {1, 1, INF}, 
     {INF, 1, 1}, 
     {INF, 1, INF } }, 
 
-{    {1, 1, INF}, 
+{
+//Tree No.16
+    {1, 1, INF}, 
     {INF, 1, 1}, 
     {INF, INF, 1 } }, 
 
-{    {1, 1, INF}, 
+{
+//Tree No.17
+    {1, 1, INF}, 
     {INF, 1, INF}, 
     {1, INF, 1 } }, 
 
-{    {1, 1, INF}, 
+{
+//Tree No.18
+    {1, 1, INF}, 
     {INF, 1, INF}, 
     {INF, 1, 1 } }, 
 
-{    {1, 1, INF}, 
+{
+//Tree No.19
+    {1, 1, INF}, 
     {INF, INF, 1}, 
     {1, INF, 1 } }, 
 
-{    {1, 1, INF}, 
+{
+//Tree No.20
+    {1, 1, INF}, 
     {INF, INF, 1}, 
     {INF, 1, 1 } }, 
 
-{    {1, INF, 1}, 
+{
+//Tree No.21
+    {1, INF, 1}, 
     {1, 1, INF}, 
     {1, INF, INF } }, 
 
-{    {1, INF, 1}, 
+{
+//Tree No.22
+    {1, INF, 1}, 
     {1, 1, INF}, 
     {INF, 1, INF } }, 
 
-{    {1, INF, 1}, 
+{
+//Tree No.23
+    {1, INF, 1}, 
     {1, 1, INF}, 
     {INF, INF, 1 } }, 
 
-{    {1, INF, 1}, 
+{
+//Tree No.24
+    {1, INF, 1}, 
     {1, INF, INF}, 
     {1, 1, INF } }, 
 
-{    {1, INF, 1}, 
+{
+//Tree No.25
+    {1, INF, 1}, 
     {1, INF, INF}, 
     {INF, 1, 1 } }, 
 
-{    {1, INF, 1}, 
+{
+//Tree No.26
+    {1, INF, 1}, 
     {INF, 1, 1}, 
     {1, INF, INF } }, 
 
-{    {1, INF, 1}, 
+{
+//Tree No.27
+    {1, INF, 1}, 
     {INF, 1, 1}, 
     {INF, 1, INF } }, 
 
-{    {1, INF, 1}, 
+{
+//Tree No.28
+    {1, INF, 1}, 
     {INF, 1, 1}, 
     {INF, INF, 1 } }, 
 
-{    {1, INF, 1}, 
+{
+//Tree No.29
+    {1, INF, 1}, 
     {INF, 1, INF}, 
     {1, 1, INF } }, 
 
-{    {1, INF, 1}, 
+{
+//Tree No.30
+    {1, INF, 1}, 
     {INF, 1, INF}, 
     {INF, 1, 1 } }, 
 
-{    {1, INF, 1}, 
+{
+//Tree No.31
+    {1, INF, 1}, 
     {INF, INF, 1}, 
     {1, 1, INF } }, 
 
-{    {1, INF, 1}, 
+{
+//Tree No.32
+    {1, INF, 1}, 
     {INF, INF, 1}, 
     {INF, 1, 1 } }, 
 
-{    {1, INF, INF}, 
+{
+//Tree No.33
+    {1, INF, INF}, 
     {1, 1, 1}, 
     {1, INF, INF } }, 
 
-{    {1, INF, INF}, 
+{
+//Tree No.34
+    {1, INF, INF}, 
     {1, 1, 1}, 
     {INF, 1, INF } }, 
 
-{    {1, INF, INF}, 
+{
+//Tree No.35
+    {1, INF, INF}, 
     {1, 1, 1}, 
     {INF, INF, 1 } }, 
 
-{    {1, INF, INF}, 
+{
+//Tree No.36
+    {1, INF, INF}, 
     {1, 1, INF}, 
     {1, INF, 1 } }, 
 
-{    {1, INF, INF}, 
+{
+//Tree No.37
+    {1, INF, INF}, 
     {1, 1, INF}, 
     {INF, 1, 1 } }, 
 
-{    {1, INF, INF}, 
+{
+//Tree No.38
+    {1, INF, INF}, 
     {1, INF, 1}, 
     {1, 1, INF } }, 
 
-{    {1, INF, INF}, 
+{
+//Tree No.39
+    {1, INF, INF}, 
     {1, INF, 1}, 
     {INF, 1, 1 } }, 
 
-{    {1, INF, INF}, 
+{
+//Tree No.40
+    {1, INF, INF}, 
     {1, INF, INF}, 
     {1, 1, 1 } }, 
 
-{    {1, INF, INF}, 
+{
+//Tree No.41
+    {1, INF, INF}, 
     {INF, 1, 1}, 
     {1, 1, INF } }, 
 
-{    {1, INF, INF}, 
+{
+//Tree No.42
+    {1, INF, INF}, 
     {INF, 1, 1}, 
     {1, INF, 1 } }, 
 
-{    {1, INF, INF}, 
+{
+//Tree No.43
+    {1, INF, INF}, 
     {INF, 1, INF}, 
     {1, 1, 1 } }, 
 
-{    {1, INF, INF}, 
+{
+//Tree No.44
+    {1, INF, INF}, 
     {INF, INF, 1}, 
     {1, 1, 1 } }, 
 
-{    {INF, 1, 1}, 
+{
+//Tree No.45
+    {INF, 1, 1}, 
     {1, 1, INF}, 
     {1, INF, INF } }, 
 
-{    {INF, 1, 1}, 
+{
+//Tree No.46
+    {INF, 1, 1}, 
     {1, 1, INF}, 
     {INF, 1, INF } }, 
 
-{    {INF, 1, 1}, 
+{
+//Tree No.47
+    {INF, 1, 1}, 
     {1, 1, INF}, 
     {INF, INF, 1 } }, 
 
-{    {INF, 1, 1}, 
+{
+//Tree No.48
+    {INF, 1, 1}, 
     {1, INF, 1}, 
     {1, INF, INF } }, 
 
-{    {INF, 1, 1}, 
+{
+//Tree No.49
+    {INF, 1, 1}, 
     {1, INF, 1}, 
     {INF, 1, INF } }, 
 
-{    {INF, 1, 1}, 
+{
+//Tree No.50
+    {INF, 1, 1}, 
     {1, INF, 1}, 
     {INF, INF, 1 } }, 
 
-{    {INF, 1, 1}, 
+{
+//Tree No.51
+    {INF, 1, 1}, 
     {1, INF, INF}, 
     {1, 1, INF } }, 
 
-{    {INF, 1, 1}, 
+{
+//Tree No.52
+    {INF, 1, 1}, 
     {1, INF, INF}, 
     {1, INF, 1 } }, 
 
-{    {INF, 1, 1}, 
+{
+//Tree No.53
+    {INF, 1, 1}, 
     {INF, 1, INF}, 
     {1, 1, INF } }, 
 
-{    {INF, 1, 1}, 
+{
+//Tree No.54
+    {INF, 1, 1}, 
     {INF, 1, INF}, 
     {1, INF, 1 } }, 
 
-{    {INF, 1, 1}, 
+{
+//Tree No.55
+    {INF, 1, 1}, 
     {INF, INF, 1}, 
     {1, 1, INF } }, 
 
-{    {INF, 1, 1}, 
+{
+//Tree No.56
+    {INF, 1, 1}, 
     {INF, INF, 1}, 
     {1, INF, 1 } }, 
 
-{    {INF, 1, INF}, 
+{
+//Tree No.57
+    {INF, 1, INF}, 
     {1, 1, 1}, 
     {1, INF, INF } }, 
 
-{    {INF, 1, INF}, 
+{
+//Tree No.58
+    {INF, 1, INF}, 
     {1, 1, 1}, 
     {INF, 1, INF } }, 
 
-{    {INF, 1, INF}, 
+{
+//Tree No.59
+    {INF, 1, INF}, 
     {1, 1, 1}, 
     {INF, INF, 1 } }, 
 
-{    {INF, 1, INF}, 
+{
+//Tree No.60
+    {INF, 1, INF}, 
     {1, 1, INF}, 
     {1, INF, 1 } }, 
 
-{    {INF, 1, INF}, 
+{
+//Tree No.61
+    {INF, 1, INF}, 
     {1, 1, INF}, 
     {INF, 1, 1 } }, 
 
-{    {INF, 1, INF}, 
+{
+//Tree No.62
+    {INF, 1, INF}, 
     {1, INF, 1}, 
     {1, 1, INF } }, 
 
-{    {INF, 1, INF}, 
+{
+//Tree No.63
+    {INF, 1, INF}, 
     {1, INF, 1}, 
     {INF, 1, 1 } }, 
 
-{    {INF, 1, INF}, 
+{
+//Tree No.64
+    {INF, 1, INF}, 
     {1, INF, INF}, 
     {1, 1, 1 } }, 
 
-{    {INF, 1, INF}, 
+{
+//Tree No.65
+    {INF, 1, INF}, 
     {INF, 1, 1}, 
     {1, 1, INF } }, 
 
-{    {INF, 1, INF}, 
+{
+//Tree No.66
+    {INF, 1, INF}, 
     {INF, 1, 1}, 
     {1, INF, 1 } }, 
 
-{    {INF, 1, INF}, 
+{
+//Tree No.67
+    {INF, 1, INF}, 
     {INF, 1, INF}, 
     {1, 1, 1 } }, 
 
-{    {INF, 1, INF}, 
+{
+//Tree No.68
+    {INF, 1, INF}, 
     {INF, INF, 1}, 
     {1, 1, 1 } }, 
 
-{    {INF, INF, 1}, 
+{
+//Tree No.69
+    {INF, INF, 1}, 
     {1, 1, 1}, 
     {1, INF, INF } }, 
 
-{    {INF, INF, 1}, 
+{
+//Tree No.70
+    {INF, INF, 1}, 
     {1, 1, 1}, 
     {INF, 1, INF } }, 
 
-{    {INF, INF, 1}, 
+{
+//Tree No.71
+    {INF, INF, 1}, 
     {1, 1, 1}, 
     {INF, INF, 1 } }, 
 
-{    {INF, INF, 1}, 
+{
+//Tree No.72
+    {INF, INF, 1}, 
     {1, 1, INF}, 
     {1, INF, 1 } }, 
 
-{    {INF, INF, 1}, 
+{
+//Tree No.73
+    {INF, INF, 1}, 
     {1, 1, INF}, 
     {INF, 1, 1 } }, 
 
-{    {INF, INF, 1}, 
+{
+//Tree No.74
+    {INF, INF, 1}, 
     {1, INF, 1}, 
     {1, 1, INF } }, 
 
-{    {INF, INF, 1}, 
+{
+//Tree No.75
+    {INF, INF, 1}, 
     {1, INF, 1}, 
     {INF, 1, 1 } }, 
 
-{    {INF, INF, 1}, 
+{
+//Tree No.76
+    {INF, INF, 1}, 
     {1, INF, INF}, 
     {1, 1, 1 } }, 
 
-{    {INF, INF, 1}, 
+{
+//Tree No.77
+    {INF, INF, 1}, 
     {INF, 1, 1}, 
     {1, 1, INF } }, 
 
-{    {INF, INF, 1}, 
+{
+//Tree No.78
+    {INF, INF, 1}, 
     {INF, 1, 1}, 
     {1, INF, 1 } }, 
 
-{    {INF, INF, 1}, 
+{
+//Tree No.79
+    {INF, INF, 1}, 
     {INF, 1, INF}, 
     {1, 1, 1 } }, 
 
-{    {INF, INF, 1}, 
+{
+//Tree No.80
+    {INF, INF, 1}, 
     {INF, INF, 1}, 
     {1, 1, 1 } }
 };

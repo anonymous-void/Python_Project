@@ -154,23 +154,49 @@ def branch_current_reduce(ob_np_matrix):
             ob_np_matrix[row][5] = 0
 
 
-def branch_current_to_C_array(ob_many_trees):
-    fp = open('branch_current_C_array.txt', 'w')
-    fp.writelines('double current_array[81][9][6] = {')
+def branch_current_to_C_array_unbalance_current(ob_many_trees):
+    fp = open('branch_unbalance_current_C_array.txt', 'w')
+    fp.writelines('double gd_Branch_Unbalance_Current_Coef[81][9][6] = {')
     fp.writelines('\n')
     for idx, item in enumerate(ob_many_trees):
         tmp_branch_current = branch_current_of_a_tree(item)
-        branch_current_reduce(tmp_branch_current)
-        fp.writelines('{')
-        for row in range(0, 6):
+        # compare to balanced one, this func's only diff is here, whithout "branch_current_reduce(tmp_branch_current)"
+        fp.writelines('{\n//Tree No.' + str(idx) + '\n')
+        for row in range(0, 9):
             fp.writelines('    {')
             for col in range(0, 6):
                 fp.writelines(str(tmp_branch_current[row][col]))
                 if col < 5:
                     fp.writelines(', ')
-            if row < 5:
+            if row < (9-1):
                 fp.writelines('},\n')
-            elif row == 5:
+            elif row == (9-1):
+                fp.writelines('}')
+        if idx < 81 - 1:
+            fp.writelines(' },\n\n')
+        elif idx == 81 - 1:
+            fp.writelines(' }\n')
+    fp.writelines('};')
+    fp.close()
+
+
+def branch_current_to_C_array(ob_many_trees):
+    fp = open('branch_current_C_array.txt', 'w')
+    fp.writelines('double gd_Branch_Current_Coef[81][9][6] = {')
+    fp.writelines('\n')
+    for idx, item in enumerate(ob_many_trees):
+        tmp_branch_current = branch_current_of_a_tree(item)
+        branch_current_reduce(tmp_branch_current)
+        fp.writelines('{\n//Tree No.' + str(idx) + '\n')
+        for row in range(0, 9):
+            fp.writelines('    {')
+            for col in range(0, 6):
+                fp.writelines(str(tmp_branch_current[row][col]))
+                if col < 5:
+                    fp.writelines(', ')
+            if row < (9-1):
+                fp.writelines('},\n')
+            elif row == (9-1):
                 fp.writelines('}')
         if idx < 81 - 1:
             fp.writelines(' },\n\n')
@@ -186,7 +212,7 @@ def tree_to_C_array(ob_many_trees):
     fp.writelines('\n')
     for idx, item in enumerate(ob_many_trees):
         tmp_tree = undirected_adjMat2SwMat(item)
-        fp.writelines('{')
+        fp.writelines('{\n//Tree No.' + str(idx) + '\n')
         for row in range(0, 3):
             fp.writelines('    {')
             for col in range(0, 3):
@@ -243,16 +269,17 @@ VOUT = [[0, 0, 0], [1, 0, 0], [1, 1, 0], [0, 1, 0], [0, 1, 1], [0, 0, 1], [1, 0,
 
 
 
-s = equ_calc_cur_for_a_tree(Tree_Mat[2])
-sm = branch_current_of_a_tree(Tree_Mat[2])
+s = equ_calc_cur_for_a_tree(Tree_Mat[38])
+sm = branch_current_of_a_tree(Tree_Mat[38])
 
-# print(sm)
+print(sm)
 # branch_current_reduce(sm)
 # print(sm)
 
 
 for key in s:
     print(str(key) + ':\t' + str(s[key]))
-
+#
 # branch_current_to_C_array(Tree_Mat)
-# tree_to_C_array(Tree_Mat)
+# branch_current_to_C_array_unbalance_current(Tree_Mat)
+tree_to_C_array(Tree_Mat)
