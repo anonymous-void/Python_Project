@@ -269,8 +269,8 @@ VOUT = [[0, 0, 0], [1, 0, 0], [1, 1, 0], [0, 1, 0], [0, 1, 1], [0, 0, 1], [1, 0,
 
 
 
-s = equ_calc_cur_for_a_tree(Tree_Mat[38])
-sm = branch_current_of_a_tree(Tree_Mat[38])
+s = equ_calc_cur_for_a_tree(Tree_Mat[26])
+sm = branch_current_of_a_tree(Tree_Mat[26])
 
 print(sm)
 # branch_current_reduce(sm)
@@ -282,4 +282,4 @@ for key in s:
 #
 # branch_current_to_C_array(Tree_Mat)
 # branch_current_to_C_array_unbalance_current(Tree_Mat)
-tree_to_C_array(Tree_Mat)
+# tree_to_C_array(Tree_Mat)
